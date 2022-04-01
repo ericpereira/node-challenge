@@ -1,0 +1,284 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Node Challenge Jobsity Eric Pereira",
+    "description": "This is my swagger documentation for this challenge.",
+    "contact": {
+      "name": "Eric Pereira",
+      "url": "https://www.linkedin.com/in/eric-pereira-dev/",
+      "email": "ericiclone@gmail.com"
+    },
+    "version": "1.0.0"
+    },
+    "tags": [
+      {
+        "name": "user",
+        "description": "To access user login is necessary"
+      }
+    ],
+    "paths": {
+      "/register": {
+        "post": {
+          "tags": [
+            "user"
+          ],
+          "summary": "Register a new user",
+          "consumes": [
+            "application/json"
+            ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "body",
+              "name": "body",
+              "description": "new user",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/User"
+              }
+            }
+          ],
+          "responses": {
+            "201": {
+              "description": "successfully operation",
+              "schema": {
+              "$ref": "#/definitions/ApiResponse"
+              }
+            },
+            "422": {
+              "description": "unprocessable entity",
+              "schema": {
+              "$ref": "#/definitions/ApiResponse"
+              }
+            },
+            "500": {
+              "description": "internal server error",
+              "schema": {
+              "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          }
+        }
+      },
+      "/login": {
+        "post": {
+          "tags": [
+            "user"
+          ],
+          "summary": "Login user",
+          "consumes": [
+            "application/json"
+            ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "body",
+              "name": "body",
+              "description": "new user",
+              "required": true,
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "required": true
+                  },
+                  "password": {
+                    "type": "string",
+                    "required": true
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "successfully operation",
+              "schema": {
+              "$ref": "#/definitions/ApiResponse"
+              }
+            },
+            "401": {
+              "description": "unauthorized",
+              "schema": {
+              "$ref": "#/definitions/ApiResponse"
+              }
+            },
+            "500": {
+              "description": "internal server error",
+              "schema": {
+              "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          }
+        }
+      },
+      "/stock": {
+        "get": {
+          "tags": [
+            "user"
+          ],
+          "summary": "Stock quote",
+          "consumes": [
+            "application/json"
+            ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "name": "Authorization",
+              "in": "header",
+              "description": "Bearer token",
+              "required": true,
+              "type": "string"
+            },
+            {  
+              "name":"q",
+              "in":"query",
+              "description":"Stock code to search",
+              "required":true,
+              "type":"string"
+           }
+          ],
+          "responses": {
+            "200": {
+              "description": "successfully operation",
+              "schema": {
+              "$ref": "#/definitions/ApiResponse"
+              }
+            },
+            "401": {
+              "description": "unauthorized",
+              "schema": {
+              "$ref": "#/definitions/ApiResponse"
+              }
+            },
+            "500": {
+              "description": "internal server error",
+              "schema": {
+              "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "security": [ { "bearerAuth": [] } ]
+        }
+      },
+      "/history": {
+        "get": {
+          "tags": [
+            "user"
+          ],
+          "summary": "Quotation history",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "name": "Authorization",
+              "in": "header",
+              "description": "Bearer token",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "successfully operation",
+              "schema": {
+              "$ref": "#/definitions/ApiResponse"
+              }
+            },
+            "401": {
+              "description": "unauthorized",
+              "schema": {
+              "$ref": "#/definitions/ApiResponse"
+              }
+            },
+            "500": {
+              "description": "internal server error",
+              "schema": {
+              "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "security": [ { "bearerAuth": [] } ]
+        }
+      },
+      "/stats": {
+        "get": {
+          "tags": [
+            "user"
+          ],
+          "summary": "Stats, most requested stocks (Admin only)",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "name": "Authorization",
+              "in": "header",
+              "description": "Bearer token",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "successfully operation",
+              "schema": {
+              "$ref": "#/definitions/ApiResponse"
+              }
+            },
+            "401": {
+              "description": "unauthorized",
+              "schema": {
+              "$ref": "#/definitions/ApiResponse"
+              }
+            },
+            "500": {
+              "description": "internal server error",
+              "schema": {
+              "$ref": "#/definitions/ApiResponse"
+              }
+            }
+          },
+          "security": [ { "bearerAuth": [] } ]
+        }
+      }
+    },
+    "definitions": {
+      "ApiResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "string"
+          },
+          "error": {
+            "type": "string"
+          }
+        }
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          }
+        }
+      }
+    }
+}
