@@ -22,12 +22,6 @@ npm start
 
 For production environments...
 I'm using mongodb for persists data, and to make more easy, i'm share my mongodb credentials and the api secret for jwt. If you prefer, can you change this data.
-```sh
-API_SECRET=4a2e27b18ef5586f47f7326e817c15e7
-DB_USER=root
-DB_PASS=29rVwe6U3j9uZ6os
-STOCK_SERVICE_URL=http://localhost:3002
-```
 
 ## Documentation
 
