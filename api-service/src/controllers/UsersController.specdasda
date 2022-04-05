@@ -1,0 +1,42 @@
+require('dotenv').config();
+const app = require("../../app");
+const request = require('supertest');
+jest.setTimeout(30000)
+var mongoose = require('mongoose');
+
+
+describe("create user controller", () => {
+  // beforeEach(() => {
+  //   jest.useFakeTimers()
+  // })
+
+  //antes de tudo, faça isso aquis
+  beforeAll(async () => {
+    const dbUser = process.env.DB_USER;
+    const dbPass = process.env.DB_PASS;
+    //console.log('Connect to ', `mongodb+srv://${dbUser}:${dbPass}@cluster0.a67js.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`);
+    await mongoose
+      .connect(`mongodb+srv://${dbUser}:${dbPass}@cluster0.a67js.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`)
+  })
+
+  afterAll(async () => {
+    await mongoose.connection.close(true)
+  })
+
+  const mockObject = {
+    email: `${Math.floor(Math.random() * Math.pow(16, 16)).toString(16)}test@hotmail.com`,
+    role: 'admin'
+  }
+
+  it("should be able to create a new user", (done) => {
+      request(app)
+        .post('/register')
+        .send(mockObject)
+        .set('Accept', 'Application/json')
+        .expect(201)
+        .end(function (err, res) {
+          if(err) throw err;
+          done()
+        })
+  })
+})

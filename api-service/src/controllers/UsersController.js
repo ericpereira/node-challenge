@@ -32,13 +32,10 @@ exports.register = async function (req, res, next) {
   }
 
   try {
-    const saveUser = await UserService.create({ email, role });
+    const savedUser = await UserService.create({ email, role });
 
-    if(saveUser){
-      return res.status(201).json({
-        email,
-        password  
-      });
+    if(savedUser){
+      return res.status(201).json(savedUser);
     }
   } catch (error) {
     console.log(`Error insert user ${error}`);

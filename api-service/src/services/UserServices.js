@@ -5,21 +5,26 @@ const bcrypt = require('bcrypt');
 var mongoose = require('mongoose');
 
 exports.connect = async function () {
-    const dbUser = process.env.DB_USER;
-    const dbPass = process.env.DB_PASS;
-    //console.log('Connect to ', `mongodb+srv://${dbUser}:${dbPass}@cluster0.a67js.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`);
-    await mongoose
-      .connect(`mongodb+srv://${dbUser}:${dbPass}@cluster0.a67js.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`)
-      .then(() => {
-        /**
-         * Listen on provided port, on all network interfaces.
-         */
-        //console.log('Connected to MongoDB...');
-      })
-      .catch((err) => {
-        //console.log(err);
-      })
-  }
+  const dbUser = process.env.DB_USER;
+  const dbPass = process.env.DB_PASS;
+  //console.log('Connect to ', `mongodb+srv://${dbUser}:${dbPass}@cluster0.a67js.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`);
+  await mongoose
+    .connect(`mongodb+srv://${dbUser}:${dbPass}@cluster0.a67js.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`)
+    .then(() => {
+    /**
+     * Listen on provided port, on all network interfaces.
+     */
+    //console.log('Connected to MongoDB...');
+    })
+    .catch((err) => {
+    //console.log(err);
+    });
+  return mongoose;
+}
+
+// exports.disconnect = async function () {
+//   await mongoose.connection.close(true)
+// }
 
 exports.create = async function (data){
     const { email, role } = data;
